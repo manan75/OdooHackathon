@@ -1,4 +1,5 @@
-import Users from "../Models/users";
+import Users from "../Models/users.js";
+
 export const getUserData = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -10,7 +11,7 @@ export const getUserData = async (req, res) => {
         success: true,
         userData: {
           userId: user._id,
-          name: user.name,
+          username: user.username,
         },
       });
     } else {

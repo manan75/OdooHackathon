@@ -1,20 +1,19 @@
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import db from '../Config/db.js'
-import Users from '../Models/users.js'
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import db from '../Config/db.js';
+import Users from '../Models/users.js';
 
-//when user registers
+// Register a new user
+export const register = async (req, res) => {
+  const { username, password } = req.body;
 
-export const register = async(req,res)=>{
-    const {name,password} = req.body
-
-    if (!name || !password) {
+  if (!username || !password) {
     return res.json({ success: false, message: "Missing details" });
   }
 
   try {
     // Check if user already exists
-    const existingUser = await Users.findOne({ name });
+    const existingUser = await Users.findOne({ username });
     if (existingUser) {
       return res.json({ success: false, message: "User already exists" });
     }
@@ -24,9 +23,8 @@ export const register = async(req,res)=>{
 
     // Create and save new user
     const newUser = new Users({
-      name,
+      username,
       password: hashPassword,
-      online: false, // default, can skip explicitly
     });
 
     await newUser.save();
@@ -36,23 +34,22 @@ export const register = async(req,res)=>{
       message: "User registered successfully",
       userId: newUser._id,
     });
-
   } catch (error) {
     console.error("Error during registration:", error);
     return res.status(500).json({ success: false, message: "Server error" });
   }
+};
 
-}
-
+// Login logic
 export const login = async (req, res) => {
-  const { name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!name || !password) {
+  if (!username || !password) {
     return res.json({ success: false, message: "Missing credentials" });
   }
 
   try {
-    const user = await Users.findOne({ name });
+    const user = await Users.findOne({ username });
 
     if (!user) {
       return res.json({ success: false, message: "User not found" });
@@ -66,17 +63,17 @@ export const login = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, name: user.name },
+      { userId: user._id, username: user.username },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || "1d" }
     );
 
-     res.cookie('token', token, {
-            httpOnly: true,
-            secure: false,
-            sameSite: 'Lax',
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        });
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'Lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     return res.json({
       success: true,
