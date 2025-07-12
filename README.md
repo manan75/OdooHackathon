@@ -4,6 +4,11 @@ This is the Odoo Hackathon repo
 Problem Statement:
 
 Problem Statement #2
+
+# DEMO LINK:
+https://drive.google.com/file/d/1jVy9QiZ6hKY_oHy2dvNIGQwOct4M71f3/view?usp=sharing
+
+
 StackIt – A Minimal Q&A Forum Platform
 Overview
 StackIt is a m inim al question-and-answer platform that supports collaborative
