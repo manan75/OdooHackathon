@@ -9,6 +9,9 @@ const LandingPage = () => {
   const [filterType, setFilterType] = useState('Newest');
   const [questions, setQuestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
   const backendURL = 'http://localhost:5000';
 
   const toggleTheme = () => setDarkMode(!darkMode);
@@ -32,6 +35,8 @@ const LandingPage = () => {
   const filteredQuestions = questions.filter((q) =>
     q.tags.some(tag => tag.name.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+
+  const displayQuestions = searchTerm ? filteredQuestions : questions;
 
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
@@ -90,16 +95,22 @@ const LandingPage = () => {
 
         {/* Questions List */}
         <div className="space-y-6">
-          {(filteredQuestions.length === 0 && searchTerm !== '') ? (
-            <p className="text-gray-500">No questions found for that tag.</p>
+          {displayQuestions.length === 0 ? (
+            <p className="text-gray-500">No questions found.</p>
           ) : (
-            (searchTerm ? filteredQuestions : questions).map((q) => (
+            displayQuestions.map((q) => (
               <div
                 key={q._id}
                 className="p-5 rounded-lg shadow-sm border bg-white dark:bg-gray-800 dark:border-gray-700"
               >
                 <div className="flex justify-between mb-2">
-                  <h2 className="text-lg font-semibold text-blue-600 hover:underline cursor-pointer">
+                  <h2
+                    className="text-lg font-semibold text-blue-600 hover:underline cursor-pointer"
+                    onClick={() => {
+                      setSelectedQuestion(q);
+                      setShowModal(true);
+                    }}
+                  >
                     {q.title}
                   </h2>
                   <span className="text-sm text-gray-500">
@@ -145,6 +156,47 @@ const LandingPage = () => {
           )}
         </div>
       </main>
+
+      {/* Modal for Answer Display */}
+      {showModal && selectedQuestion && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-start overflow-y-auto p-4">
+          <div className="bg-white dark:bg-gray-900 rounded-lg w-full max-w-3xl p-6 shadow-xl relative">
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-3 right-4 text-xl text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+            >
+              ×
+            </button>
+
+            <h2 className="text-2xl font-bold text-blue-600 mb-3">{selectedQuestion.title}</h2>
+
+            <div
+              className="prose dark:prose-invert mb-6"
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedQuestion.description) }}
+            />
+
+            <h3 className="text-lg font-semibold mb-2">Answers</h3>
+
+            {selectedQuestion.answers?.length > 0 ? (
+              <ul className="space-y-4">
+                {selectedQuestion.answers.map((ans) => (
+                  <li key={ans._id} className="bg-gray-100 dark:bg-gray-700 p-4 rounded">
+                    <div
+                      className="text-sm"
+                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(ans.text) }}
+                    />
+                    <div className="text-xs text-gray-500 mt-2">
+                      By {ans.user?.username || "Anonymous"}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500">No answers yet.</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
