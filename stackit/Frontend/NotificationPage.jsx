@@ -10,19 +10,23 @@ const NotificationPage = () => {
   const [filter, setFilter] = useState('all');
 
   const fetchNotifications = async () => {
+    if (!userData?.username) return;
+
     try {
-      const res = await axios.get(`${backendURL}/api/user/notifs/${userData._id}`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        `${backendURL}/api/user/notifs?username=${userData.username}`,
+        { withCredentials: true }
+      );
       setNotifications(res.data.notifications || []);
+      console.log("Fetched notifications:", res.data.notifications);
     } catch (err) {
       console.error("Error fetching notifications:", err);
     }
   };
 
   useEffect(() => {
-    if (userData?._id) fetchNotifications();
-  }, [userData]);
+    fetchNotifications();
+  }, [userData?.username]);
 
   const getTypeIcon = (type) => {
     switch (type) {
@@ -45,7 +49,7 @@ const NotificationPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-4 px-4 sm:px-6 lg:px-8">
-      <Navbar/>
+      <Navbar />
       <div className="max-w-4xl mx-auto p-3">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
@@ -56,9 +60,7 @@ const NotificationPage = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">Notifications</h1>
-                <p className="text-sm text-gray-600">
-                  Showing your latest updates
-                </p>
+                <p className="text-sm text-gray-600">Showing your latest updates</p>
               </div>
             </div>
           </div>
@@ -108,9 +110,7 @@ const NotificationPage = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center space-x-2">
-                        <h3 className="text-sm font-medium text-gray-900">
-                          {n.message}
-                        </h3>
+                        <h3 className="text-sm font-medium text-gray-900">{n.message}</h3>
                         <span className={`px-2 py-1 text-xs font-medium rounded-full ${getTypeColor(n.type)}`}>
                           {n.type}
                         </span>
