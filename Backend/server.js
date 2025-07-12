@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import connectDB from "./Config/db.js";
 import authRouter from "./routes/authRoutes.js"
 import userRouter from "./routes/userRoutes.js";
+import quesrouter from './Routes/questionRoutes.js'
 
 
 dotenv.config()
@@ -24,6 +25,7 @@ connectDB();
 
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
+app.use('/api/ques', quesrouter)
 
 app.get('/', (req, res) => res.send('StackIt API is running'))
 
