@@ -143,7 +143,7 @@ const FeedPage = () => {
         </main>
       </div>
     </div>
-  );
+  )
 };
 
 export default FeedPage;
