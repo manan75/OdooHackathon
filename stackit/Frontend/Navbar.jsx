@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, Bell, Settings, LogOut, User, Filter, Clock, MessageCircle, Plus, Moon, Sun } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
 
 export default function Navbar() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -34,10 +36,10 @@ export default function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#" className={`${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'} font-medium`}>Home</a>
-              <a href="#" className={`${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'} font-medium`}>Questions</a>
-              <a href="#" className={`${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'} font-medium`}>Tags</a>
-              <a href="#" className={`${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'} font-medium`}>Users</a>
+              <Link to="/userhome" className={`${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'} font-medium`}>Home</Link>
+               <Link to="/userhome" className={`${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'} font-medium`}>Feed</Link>
+                <Link to="/userhome" className={`${isDarkMode ? 'text-gray-300 hover:text-blue-400' : 'text-gray-700 hover:text-blue-600'} font-medium`}>My Questions</Link>
+                
             </div>
 
             {/* Right Side Icons */}
