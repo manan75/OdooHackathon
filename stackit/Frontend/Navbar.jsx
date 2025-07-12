@@ -21,7 +21,8 @@ export default function Navbar() {
   };
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+   <div className={`${isDarkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
+
       {/* Navbar */}
       <nav className={`${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} shadow-sm border-b`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -152,78 +153,7 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Demo Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className={`rounded-lg shadow-sm p-6 ${isDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-            <h2 className={`text-xl font-semibold mb-4 sm:mb-0 ${isDarkMode ? 'text-gray-100' : 'text-gray-900'}`}>Latest Questions</h2>
-            
-            {/* Desktop Filters */}
-            <div className="hidden md:flex items-center space-x-4">
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                Newest
-              </button>
-              <button className={`px-4 py-2 rounded-lg transition-colors ${isDarkMode ? 'text-gray-300 hover:text-blue-400 hover:bg-gray-700' : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'}`}>
-                Unanswered
-              </button>
-              <button className={`px-4 py-2 rounded-lg transition-colors ${isDarkMode ? 'text-gray-300 hover:text-blue-400 hover:bg-gray-700' : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'}`}>
-                Most Voted
-              </button>
-              <button className={`px-4 py-2 rounded-lg transition-colors ${isDarkMode ? 'text-gray-300 hover:text-blue-400 hover:bg-gray-700' : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'}`}>
-                Most Viewed
-              </button>
-            </div>
-          </div>
-
-          {/* Search Bar */}
-          <div className="mb-6">
-            <input
-              type="text"
-              placeholder="Search questions..."
-              className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isDarkMode ? 'bg-gray-700 border-gray-600 text-gray-100 placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'}`}
-            />
-          </div>
-
-          {/* Sample Questions */}
-          <div className="space-y-4">
-            <div className={`border rounded-lg p-4 ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-              <div className="flex items-center space-x-4 mb-2">
-                <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>5 answers</span>
-                <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>124 views</span>
-              </div>
-              <h3 className={`text-lg font-medium mb-2 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
-                How to join 2 columns in a data set to make a separate column in SQL
-              </h3>
-              <p className={`text-sm mb-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                I do not know the code for it as I am a beginner. As an example what I need to do is like there is a column 1 containing First name and column 2 consists of last name I want a...
-              </p>
-              <div className="flex items-center space-x-2">
-                <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'}`}>sql</span>
-                <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'}`}>database</span>
-              </div>
-            </div>
-
-            <div className={`border rounded-lg p-4 ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-              <div className="flex items-center space-x-4 mb-2">
-                <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>3 answers</span>
-                <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>89 views</span>
-              </div>
-              <h3 className={`text-lg font-medium mb-2 ${isDarkMode ? 'text-blue-400' : 'text-blue-600'}`}>
-                Best practices for React state management in large applications
-              </h3>
-              <p className={`text-sm mb-3 ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                I'm working on a large React application and struggling with state management. What are the best practices for organizing state in complex components?
-              </p>
-              <div className="flex items-center space-x-2">
-                <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'}`}>react</span>
-                <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'}`}>javascript</span>
-                <span className={`px-2 py-1 text-xs rounded ${isDarkMode ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'}`}>state-management</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    
       {/* Overlay for mobile dropdowns */}
       {(isProfileOpen || isFiltersOpen) && (
         <div
