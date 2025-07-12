@@ -9,6 +9,7 @@ import AdminLoginPage from './AdminLogin';
 import LandingPage from './LandingPage'
 import TempHome from './TempHome';
 import HomePage from './HomePage';
+import FeedPage from './FeedPage';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         />
         <Route path='/userhome' element={<HomePage/>}></Route>
         <Route path="/home" element={<TempHome/>}/>
+        <Route path ="feed" element={<FeedPage/>}/>
       </Routes>
     </Router>
   )

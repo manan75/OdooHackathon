@@ -159,46 +159,59 @@ const LandingPage = () => {
         </div>
       </main>
 
-      {/* Modal for Answer Display */}
-      {showModal && selectedQuestion && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-start overflow-y-auto p-4">
-          <div className="bg-white dark:bg-gray-900 rounded-lg w-full max-w-3xl p-6 shadow-xl relative">
-            <button
-              onClick={() => setShowModal(false)}
-              className="absolute top-3 right-4 text-xl text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+     {showModal && selectedQuestion && (
+  <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-start overflow-y-auto p-4">
+    <div className="bg-white dark:bg-gray-900 rounded-lg w-full max-w-3xl p-6 shadow-xl relative">
+      {/* Close Button */}
+      <button
+        onClick={() => {
+          setShowModal(false);
+          setSelectedQuestion(null);
+        }}
+        className="absolute top-3 right-4 text-xl text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+      >
+        ×
+      </button>
+
+      {/* Question Title */}
+      <h2 className="text-2xl font-bold text-blue-600 mb-3">{selectedQuestion.title}</h2>
+
+      {/* Question Description */}
+      <div
+        className="prose dark:prose-invert mb-6"
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(selectedQuestion.description),
+        }}
+      />
+
+      {/* Answers Section */}
+      <h3 className="text-lg font-semibold mb-2">Answers</h3>
+
+      {selectedQuestion.answers?.length > 0 ? (
+        <ul className="space-y-4">
+          {selectedQuestion.answers.map((ans) => (
+            <li
+              key={ans._id}
+              className="bg-gray-100 dark:bg-gray-700 p-4 rounded text-sm"
             >
-              ×
-            </button>
-
-            <h2 className="text-2xl font-bold text-blue-600 mb-3">{selectedQuestion.title}</h2>
-
-            <div
-              className="prose dark:prose-invert mb-6"
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedQuestion.description) }}
-            />
-
-            <h3 className="text-lg font-semibold mb-2">Answers</h3>
-
-            {selectedQuestion.answers?.length > 0 ? (
-              <ul className="space-y-4">
-                {selectedQuestion.answers.map((ans) => (
-                  <li key={ans._id} className="bg-gray-100 dark:bg-gray-700 p-4 rounded">
-                    <div
-                      className="text-sm"
-                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(ans.text) }}
-                    />
-                    <div className="text-xs text-gray-500 mt-2">
-                      By {ans.user?.username || "Anonymous"}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500">No answers yet.</p>
-            )}
-          </div>
-        </div>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(ans.content),
+                }}
+              />
+              <div className="text-xs text-gray-500 mt-2">
+                By {ans.user?.username || 'Anonymous'}
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-500">No answers yet.</p>
       )}
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

@@ -1,6 +1,9 @@
-import Notifications from '../Models/notifications.js';
+import Notifications from '../Models/notfication.js';
+import Questions from '../Models/questions.js';
+import Users from '../Models/users.js';
+import Answers from '../Models/answers.js';
 
-const answerQuestion = async (req, res) => {
+export const answerQuestion = async (req, res) => {
   const { questionId, content, username } = req.body;
 
   const question = await Questions.findById(questionId).populate('user');
