@@ -10,6 +10,7 @@ import LandingPage from './LandingPage'
 import TempHome from './TempHome';
 import HomePage from './HomePage';
 import FeedPage from './FeedPage';
+import NotificationPage from '../Frontend/NotificationPage';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path='/userhome' element={<HomePage/>}></Route>
         <Route path="/home" element={<TempHome/>}/>
         <Route path ="feed" element={<FeedPage/>}/>
+        <Route path = "notif" element={<NotificationPage/>}/>
       </Routes>
     </Router>
   )

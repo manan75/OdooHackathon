@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AppContent } from './Context/AppContext';
+import Navbar from '../Frontend/Navbar';
 
 const FeedPage = () => {
   const { userData, backendURL } = useContext(AppContent);
@@ -52,7 +53,8 @@ const FeedPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800 p-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <Navbar/>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6 p-3">
         {/* Profile Sidebar */}
         <aside className="bg-white shadow rounded-lg p-6 lg:col-span-1">
           <div className="flex flex-col items-center text-center">

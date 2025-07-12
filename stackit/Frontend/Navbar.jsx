@@ -53,10 +53,10 @@ export default function Navbar() {
               </button>
 
               {/* Notifications */}
-              <button className={`p-2 relative ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}>
+              <Link to="/notif" className={`p-2 relative ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'}`}>
                 <Bell size={20} />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
-              </button>
+              </Link>
 
               {/* Filters Dropdown - Mobile */}
               <div className="relative md:hidden">
