@@ -90,7 +90,7 @@ const AskQuestion = () => {
         </form>
       </div>
     </div>
-  );
+  )
 };
 
 export default AskQuestion;
