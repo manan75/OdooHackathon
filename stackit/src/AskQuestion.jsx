@@ -1,20 +1,43 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import axios from 'axios';
+import { AppContent } from './Context/AppContext';
+
 
 const AskQuestion = () => {
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState('');
+    const { backendURL, userData } = useContext(AppContent);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
+    const payload = {
+      username: userData?.username, // 👈 pass username
       title,
       description,
-      tags: tags.split(',').map(tag => tag.trim())
+      tags: tags.split(',').map(tag => tag.trim().toLowerCase()),
     };
-    console.log('Submitted Data:', data);
-    // Submit to backend or store
+
+    try {
+      const res = await axios.post(`${backendURL}/api/ques/create`, payload, {
+        withCredentials: true,
+      });
+
+      if (res.data.success) {
+        alert("Question submitted successfully!");
+        // Optionally reset
+        setTitle('');
+        setDescription('');
+        setTags('');
+      } else {
+        alert("Failed to submit question: " + res.data.message);
+      }
+    } catch (err) {
+      console.error("Error submitting question:", err);
+      alert("Something went wrong. Check console.");
+    }
   };
 
   return (

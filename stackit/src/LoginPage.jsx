@@ -27,7 +27,7 @@ const LoginPage = () => {
                     setIsLoggedIn(true)
                     getUserData()
                     console.log("Login response: ", data);
-                    navigate('/home')
+                    navigate('/userhome')
                 }
                 else {
                     alert(data.message)

@@ -3,34 +3,44 @@ import Answers from '../Models/answers.js';
 
 import Users from "../Models/users.js";
 
+import Tag from "../Models/tags.js";
+
 export const createQuestion = async (req, res) => {
-  const { title, description, tags } = req.body;
-
-  if (!title || !description) {
-    return res.status(400).json({ success: false, message: "Title and description are required" });
-  }
-
   try {
-    const newQuestion = new Questions({
-      user: req.user.id, // Comes from userAuth middleware
+    const { username, title, description, tags } = req.body;
+
+    // ✅ Step 1: Find user by username
+    const user = await Users.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // ✅ Step 2: Process tags (check if exists or create)
+    const tagIds = await Promise.all(
+      tags.map(async (tagName) => {
+        let tag = await Tag.findOne({ name: tagName });
+        if (!tag) {
+          tag = await Tag.create({ name: tagName });
+        }
+        return tag._id;
+      })
+    );
+
+    // ✅ Step 3: Create Question
+    const question = await Questions.create({
+      user: user._id,
       title,
       description,
-      tags, // assume it's an array of tag ObjectIds
+      tags: tagIds,
     });
 
-    await newQuestion.save();
-
-    res.status(201).json({
-      success: true,
-      message: "Question created successfully",
-      questionId: newQuestion._id,
-    });
+    res.json({ success: true, question });
   } catch (err) {
-    console.error("Error creating question:", err);
+    console.error("createQuestion error:", err);
     res.status(500).json({ success: false, message: "Server error" });
   }
 };
-
 
 
 

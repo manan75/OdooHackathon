@@ -8,6 +8,7 @@ import SignupPage from './SignUpPage';
 import AdminLoginPage from './AdminLogin';
 import LandingPage from './LandingPage'
 import TempHome from './TempHome';
+import HomePage from './HomePage';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           element={<LandingPage/>
           }
         />
+        <Route path='/userhome' element={<HomePage/>}></Route>
         <Route path="/home" element={<TempHome/>}/>
       </Routes>
     </Router>
