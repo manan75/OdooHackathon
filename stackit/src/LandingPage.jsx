@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Search, Sun, Moon, ChevronLeft, ChevronRight, Tag, User, MessageSquare, Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(3);
   const [filterType, setFilterType] = useState('Newest');
 
@@ -43,41 +44,9 @@ const LandingPage = () => {
     setDarkMode(!darkMode);
   };
 
-  const handleAuthAction = (action) => {
-    setShowLoginModal(true);
-  };
 
-  const LoginModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className={`${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'} rounded-lg p-6 w-full max-w-md`}>
-        <h2 className="text-2xl font-bold mb-4">Login Required</h2>
-        <p className="mb-6 text-gray-600 dark:text-gray-300">
-          Please log in to ask questions or provide answers on StackIt.
-        </p>
-        <div className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className={`w-full p-3 rounded-lg border ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className={`w-full p-3 rounded-lg border ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-gray-50 border-gray-300'} focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-          />
-          <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
-            Login
-          </button>
-        </div>
-        <button
-          onClick={() => setShowLoginModal(false)}
-          className="mt-4 w-full text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  );
+
+
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
@@ -101,12 +70,12 @@ const LandingPage = () => {
               >
                 {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
               </button>
-              <button
-                onClick={() => handleAuthAction('login')}
+              <Link
+                to="/signup"
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Login
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -163,7 +132,7 @@ const LandingPage = () => {
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
               <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                 <button
-                  onClick={() => handleAuthAction('ask')}
+
                   className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto text-center"
                 >
                   Ask New Question
@@ -173,29 +142,27 @@ const LandingPage = () => {
                     <button
                       key={option}
                       onClick={() => setFilterType(option)}
-                      className={`px-2 sm:px-4 py-2 text-xs sm:text-sm flex-1 sm:flex-none ${
-                        filterType === option
+                      className={`px-2 sm:px-4 py-2 text-xs sm:text-sm flex-1 sm:flex-none ${filterType === option
                           ? 'bg-blue-600 text-white'
                           : darkMode
-                          ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      } transition-colors`}
+                            ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        } transition-colors`}
                     >
                       {option}
                     </button>
                   ))}
                 </div>
               </div>
-              
+
               {/* Search Bar */}
               <div className="relative w-full sm:w-80">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search questions..."
-                  className={`w-full pl-10 pr-4 py-2 text-sm sm:text-base rounded-lg border ${
-                    darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
-                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                  className={`w-full pl-10 pr-4 py-2 text-sm sm:text-base rounded-lg border ${darkMode ? 'bg-gray-700 border-gray-600' : 'bg-white border-gray-300'
+                    } focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
                 />
               </div>
             </div>
@@ -226,16 +193,15 @@ const LandingPage = () => {
                       <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
                         {question.description}
                       </p>
-                      
+
                       {/* Tags and User Info */}
                       <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
                         <div className="flex flex-wrap gap-2">
                           {question.tags.map((tag) => (
                             <span
                               key={tag}
-                              className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${
-                                darkMode ? 'bg-gray-700 text-blue-300' : 'bg-blue-100 text-blue-800'
-                              }`}
+                              className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${darkMode ? 'bg-gray-700 text-blue-300' : 'bg-blue-100 text-blue-800'
+                                }`}
                             >
                               <Tag className="h-3 w-3 mr-1" />
                               {tag}
@@ -261,23 +227,22 @@ const LandingPage = () => {
               >
                 <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
-              
+
               {[1, 2, 3, 4, 5, 6, 7].map((page) => (
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`px-2 sm:px-3 py-2 rounded-lg text-sm sm:text-base transition-colors ${
-                    currentPage === page
+                  className={`px-2 sm:px-3 py-2 rounded-lg text-sm sm:text-base transition-colors ${currentPage === page
                       ? 'bg-blue-600 text-white'
                       : darkMode
-                      ? 'bg-gray-700 hover:bg-gray-600'
-                      : 'bg-white hover:bg-gray-100'
-                  }`}
+                        ? 'bg-gray-700 hover:bg-gray-600'
+                        : 'bg-white hover:bg-gray-100'
+                    }`}
                 >
                   {page}
                 </button>
               ))}
-              
+
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
                 className={`p-2 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-white hover:bg-gray-100'} transition-colors`}
@@ -290,7 +255,7 @@ const LandingPage = () => {
       </main>
 
       {/* Login Modal */}
-      {showLoginModal && <LoginModal />}
+
     </div>
   );
 };
