@@ -11,6 +11,8 @@ learning and structured knowledge sharing. It’s designed to be sim ple, user- 
 and focused on the core experience of asking and answering questions within a
 com m unity.
 
+Team Name: Hacktivators
+
 Team Details:
 1) Paraj Mehta (TL)
 2) Manan Kapkar
@@ -18,10 +20,11 @@ Team Details:
 4) Dhriti Sojitra
    
 Email:
-4696.stkabirdin@gmail.com
-dhritisojitra25@gmail.com
 mehta.paraj007@gmail.com
+4696.stkabirdin@gmail.com
 morikaransinh9@gmail.com
+dhritisojitra25@gmail.com
+
 
 
 
