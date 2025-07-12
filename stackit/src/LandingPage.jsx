@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
+
 const LandingPage = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [filterType, setFilterType] = useState('Newest');
@@ -41,6 +42,7 @@ const LandingPage = () => {
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       {/* Header */}
+  
       <header className={`${darkMode ? 'bg-gray-800' : 'bg-white'} border-b`}>
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-blue-600">StackIt</h1>

@@ -9,9 +9,6 @@ const TempHome = () => {
   return (
     <div>
         <Navbar/>
-      <h1>
-        Hello {userData ? userData.username || userData.name : "Guest"}
-      </h1>
       <AskQuestion/>
     </div>
   );

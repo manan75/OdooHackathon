@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AppContent } from "./Context/AppContext";
+import Navbar from "../Frontend/Navbar";
 
 const HomePage = () => {
   const { userData, backendURL } = useContext(AppContent);
@@ -26,8 +27,10 @@ const HomePage = () => {
   }, [userData]);
 
   return (
+
     <div className="min-h-screen bg-gray-100 text-gray-800 p-6">
-      <div className="max-w-4xl mx-auto space-y-8">
+      <Navbar/>
+      <div className="max-w-4xl mx-auto space-y-8 p-3">
 
         {/* Header */}
         <div className="flex justify-between items-center">
