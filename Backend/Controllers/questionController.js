@@ -43,7 +43,7 @@ export const createQuestion = async (req, res) => {
 };
 
 
-
+//fetch only user's
 export const getUserQuestions = async (req, res) => {
   const { username } = req.query;
 
@@ -82,5 +82,58 @@ export const getUserQuestions = async (req, res) => {
   } catch (error) {
     console.error("getUserQuestions error:", error);
     return res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+//fetch all questions by every user
+
+
+export const getAllQuestions = async (req, res) => {
+  try {
+    const questions = await Questions.find()
+      .populate("user", "username")
+      .populate("tags", "name")
+      .populate("acceptedAnswer")
+      .sort({ createdAt: -1 });
+
+    const questionsWithAnswers = await Promise.all(
+      questions.map(async (question) => {
+        const answers = await Answers.find({ question: question._id })
+          .populate("user", "username")
+          .sort({ upvotes: -1 });
+
+        return {
+          ...question._doc,
+          answers,
+        };
+      })
+    );
+
+    res.json({ success: true, questions: questionsWithAnswers });
+  } catch (err) {
+    console.error("getAllQuestions error:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+//to upvote a question
+
+
+export const upvoteQuestion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const question = await Questions.findById(id);
+
+    if (!question) {
+      return res.status(404).json({ success: false, message: "Question not found" });
+    }
+
+    question.upvotes += 1;
+    await question.save();
+
+    res.json({ success: true, upvotes: question.upvotes });
+  } catch (err) {
+    console.error("upvoteQuestion error:", err);
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
